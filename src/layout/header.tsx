@@ -1,11 +1,9 @@
+import wineGlass from "../assets/wine-glass.jpg";
+
 export const Header = () => {
   return (
     <header>
-      <img
-        src="./src/assets/wine-glass.jpg"
-        alt="wine-glass"
-        className="header-image"
-      />
+      <img src={wineGlass} alt="wine-glass" className="header-image" />
       <h1 className="hero-title">
         A great glass <span>reveals</span> the wine.
       </h1>
