@@ -47,13 +47,22 @@ const cards = [
 
 export const TheCollection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (!isAutoPlaying) return;
+
+    const animation = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % cards.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    }, 8000);
+
+    return () => clearInterval(animation);
+  }, [isAutoPlaying]);
+
+  const handleSelectIndex = (index: number) => {
+    setActiveIndex(index);
+    setIsAutoPlaying(false);
+  };
 
   return (
     <section id="the-collection" className="the-collection">
@@ -93,15 +102,18 @@ export const TheCollection = () => {
         </div>
 
         <div className="dots" aria-label="Collection navigation">
-          {cards.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              className={`dot ${index === activeIndex ? "active" : ""}`}
-              aria-label={`Go to ${cards[index].title}`}
-              onClick={() => setActiveIndex(index)}
-            />
-          ))}
+          {cards.map((_, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={index}
+                type="button"
+                className={`dot ${isActive ? "active" : ""} ${isActive && isAutoPlaying ? "progress-active" : ""}`}
+                aria-label={`Go to ${cards[index].title}`}
+                onClick={() => handleSelectIndex(index)}
+              ></button>
+            );
+          })}
         </div>
       </div>
     </section>

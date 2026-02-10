@@ -26,13 +26,22 @@ const testimonials = [
 
 export const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (!isAutoPlaying) return;
+
+    const animation = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, 7000);
-    return () => clearInterval(interval);
-  }, []);
+
+    return () => clearInterval(animation);
+  }, [isAutoPlaying]);
+
+  const handleSelectIndex = (index: number) => {
+    setActiveIndex(index);
+    setIsAutoPlaying(false);
+  };
 
   return (
     <section id="testimonials" className="testimonials">
@@ -60,9 +69,9 @@ export const Testimonials = () => {
             <button
               key={index}
               type="button"
-              className={`dot ${index === activeIndex ? "active" : ""}`}
+              className={`dot ${index === activeIndex ? "active" : ""} ${index === activeIndex && isAutoPlaying ? "progress-active" : ""}`}
               aria-label={`Go to testimonial ${index + 1}`}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => handleSelectIndex(index)}
             />
           ))}
         </div>

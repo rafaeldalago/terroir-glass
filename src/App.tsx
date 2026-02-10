@@ -1,14 +1,14 @@
 import "./App.css";
 import {
-  Footer,
-  Header,
-  Craft,
-  TheCollection,
-  Form,
-  Clients,
   AtTheTable,
+  Clients,
+  Craft,
+  Footer,
+  Form,
+  Header,
   Navbar,
   Testimonials,
+  TheCollection,
 } from "./layout";
 
 function App() {

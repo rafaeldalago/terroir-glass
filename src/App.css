@@ -146,6 +146,10 @@ header {
   align-self: flex-start;
 }
 
+img {
+  border-radius: var(--border-radius);
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -208,7 +212,7 @@ button {
   background: linear-gradient(
     90deg,
     rgba(61, 42, 31, 1) 0%,
-    rgb(117, 53, 32) 100%
+    rgb(114, 62, 44) 100%
   );
   color: #ffffff;
   cursor: pointer;
@@ -216,7 +220,11 @@ button {
 }
 
 button:hover {
-  background-color: var(--btn-hover-bg);
+  background: linear-gradient(
+    90deg,
+    rgba(61, 42, 31, 1) 0%,
+    rgb(139, 74, 52) 100%
+  );
 }
 
 footer {
@@ -228,6 +236,11 @@ footer {
   gap: 1rem;
   color: #fff;
   background-color: var(--primary-color);
+}
+
+footer .rights {
+  text-align: center;
+  color: var(--intensity-bar-lighter-fill);
 }
 
 form {
@@ -295,8 +308,8 @@ form {
   border: 1px solid #eee;
   background: #fff;
   gap: 2rem;
-  max-width: 100%; /* Ensure it doesn't exceed container */
-  box-sizing: border-box; /* Include padding in width calculation */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .navbar {
@@ -504,13 +517,13 @@ form {
   width: 16px;
   height: 8px;
   border-radius: 0.4rem;
+  background: #e7ded9;
   border: none;
-  background: #d1c9c4;
-  cursor: pointer;
   padding: 0;
-  transition:
-    background 300ms ease,
-    transform 300ms ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
 }
 
 .dot:hover {
@@ -519,7 +532,31 @@ form {
 
 .dot.active {
   background: var(--primary-color);
-  width: 28px;
+  width: 68px;
+}
+
+.dot.progress-active {
+  background-color: #e7ded9;
+}
+
+.dot.progress-active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background-color: var(--primary-color);
+  animation: fillProgress 8s linear forwards;
+}
+
+@keyframes fillProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .clients {
@@ -547,7 +584,7 @@ form {
 }
 
 .glass-manufacture {
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
   height: auto;
 }
