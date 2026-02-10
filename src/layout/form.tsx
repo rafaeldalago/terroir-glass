@@ -1,4 +1,4 @@
-import React, { Activity, useState } from "react";
+import React, { Activity, useRef, useState } from "react";
 
 type State =
   | { status: "idle" }
@@ -6,8 +6,28 @@ type State =
   | { status: "success" }
   | { status: "error"; message: string };
 
+const GLASS_PRICES: Record<string, number> = {
+  bordeaux: 32,
+  white: 27,
+  champagne: 26,
+} as const;
+
 export const Form = () => {
   const [state, setState] = useState<State>({ status: "idle" });
+  const [totalPrice, setTotalPrice] = useState(GLASS_PRICES["bordeaux"]);
+  const typeRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const calculateTotal = () => {
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
+    const glassType = formData.get("glassType") as keyof typeof GLASS_PRICES;
+    const quantity = parseInt(formData.get("quantity") as string) || 1;
+
+    const price = GLASS_PRICES[glassType] * quantity;
+    setTotalPrice(price);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -17,10 +37,11 @@ export const Form = () => {
       await new Promise((resolve) => setTimeout(() => resolve(""), 1000));
       setState({ status: "success" });
       form.reset();
+      setTotalPrice(25); // Reset to default
     } catch (error) {
       setState({
         status: "error",
-        message: "Your upgrade couldn’t be completed. Please try again.",
+        message: "Your upgrade couldn't be completed. Please try again.",
       });
     }
   };
@@ -38,7 +59,7 @@ export const Form = () => {
         <h3 style={{ marginBottom: "40px" }} className="heading">
           Upgrade now
         </h3>
-        <form onSubmit={handleSubmit} aria-busy={isProcessing}>
+        <form ref={formRef} onSubmit={handleSubmit} aria-busy={isProcessing}>
           <label htmlFor="full_name">
             Full name
             <input
@@ -87,7 +108,7 @@ export const Form = () => {
               required
             />
           </label>
-          <fieldset disabled={isProcessing}>
+          <fieldset ref={typeRef} disabled={isProcessing}>
             <legend>Type of glass</legend>
             <div>
               <input
@@ -96,12 +117,21 @@ export const Form = () => {
                 name="glassType"
                 value="bordeaux"
                 defaultChecked
+                onChange={calculateTotal}
               />
-              <label htmlFor="bordeaux">Bordeaux</label>
+              <label htmlFor="bordeaux">
+                {`Bordeaux ($${String(GLASS_PRICES["bordeaux"])})`}
+              </label>
             </div>
             <div>
-              <input type="radio" id="white" name="glassType" value="white" />
-              <label htmlFor="white">White</label>
+              <input
+                type="radio"
+                id="white"
+                name="glassType"
+                value="white"
+                onChange={calculateTotal}
+              />
+              <label htmlFor="white">{`White ($${String(GLASS_PRICES["white"])})`}</label>
             </div>
             <div>
               <input
@@ -109,8 +139,9 @@ export const Form = () => {
                 id="champagne"
                 name="glassType"
                 value="champagne"
+                onChange={calculateTotal}
               />
-              <label htmlFor="champagne">Champagne</label>
+              <label htmlFor="champagne">{`Champagne ($${String(GLASS_PRICES["champagne"])})`}</label>
             </div>
           </fieldset>
           <label htmlFor="quantity">
@@ -124,14 +155,40 @@ export const Form = () => {
               min={1}
               required
               defaultValue={1}
+              onChange={calculateTotal}
+              onKeyDown={(e) => {
+                if (e.key === "0" && e.currentTarget.value === "") {
+                  e.preventDefault();
+                }
+              }}
+              onInput={(e) => {
+                if (Number(e.currentTarget.value) < 1) {
+                  e.currentTarget.value = "";
+                }
+              }}
             />
           </label>
+
+          <div
+            style={{
+              marginTop: "16px",
+              fontWeight: "bold",
+              textAlign: "right",
+            }}
+          >
+            Total: ${totalPrice.toFixed(2)}
+          </div>
+
           <label htmlFor="observation">
             {`Observation (optional)`}
             <textarea id="observation" name="observation" rows={4} />
           </label>
 
-          <button type="submit" disabled={state.status === "processing"}>
+          <button
+            type="submit"
+            disabled={state.status === "processing"}
+            style={{ marginTop: "12px" }}
+          >
             {submitButtonTitle}
           </button>
           {state.status === "error" ? (
@@ -147,7 +204,7 @@ export const Form = () => {
           className={isSuccess ? "activity visible" : "activity hidden"}
         >
           <p>Your upgrade is in motion.</p>
-          <span>We’ll take it from here.</span>
+          <span>We'll take it from here.</span>
           <div id="buttons">
             <button
               onClick={() => {
