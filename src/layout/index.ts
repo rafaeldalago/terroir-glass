@@ -1,0 +1,9 @@
+export { Navbar } from "./navbar";
+export { Footer } from "./footer";
+export { Header } from "./header";
+export { Craft } from "./craft";
+export { TheCollection } from "./the-collection";
+export { Form } from "./form";
+export { Clients } from "./clients";
+export { AtTheTable } from "./at-the-table";
+export { Testimonials } from "./testimonials";
