@@ -86,7 +86,9 @@ header {
   max-width: 408px;
   display: block;
   object-fit: contain;
+  position: relative;
   margin-top: 3rem;
+  z-index: -1;
 }
 
 #menu-toggle {
@@ -320,8 +322,9 @@ form {
   background-color: #ffffff;
   position: sticky;
   top: 0;
-  margin: 0 -3rem;
-  padding: 0 3rem;
+  flex: 1;
+  margin: 0 -2rem;
+  padding: 0 2rem;
 }
 
 .card-text h3 {
@@ -382,6 +385,7 @@ form {
   font-weight: 600;
   letter-spacing: -0.02em;
   margin-top: 4rem;
+  z-index: -1;
 }
 
 .hero-title span {
@@ -644,7 +648,7 @@ form {
     gap: 2rem;
     padding-right: 2rem;
     transition: right 0.3s ease;
-    z-index: 1;
+    z-index: 2;
     border-radius: 100% 0 0 100%;
   }
 
@@ -654,7 +658,7 @@ form {
 
   #menu-toggle:checked ~ .hamburger span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
-    z-index: 2;
+    z-index: 3;
     background: var(--secondary-bg-color);
   }
   #menu-toggle:checked ~ .hamburger span:nth-child(2) {
@@ -662,7 +666,7 @@ form {
   }
   #menu-toggle:checked ~ .hamburger span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
-    z-index: 2;
+    z-index: 3;
     background: var(--secondary-bg-color);
   }
 
