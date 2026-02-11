@@ -17,6 +17,7 @@ export const Form = () => {
   const [totalPrice, setTotalPrice] = useState(GLASS_PRICES["bordeaux"]);
   const typeRef = useRef(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const quantityRef = useRef<HTMLInputElement>(null);
 
   const calculateTotal = () => {
     if (!formRef.current) return;
@@ -27,6 +28,22 @@ export const Form = () => {
 
     const price = GLASS_PRICES[glassType] * quantity;
     setTotalPrice(price);
+  };
+
+  const handleIncrement = () => {
+    if (!quantityRef.current) return;
+    const quantity = parseInt(quantityRef.current.value) || 1;
+    quantityRef.current.value = String(quantity + 1);
+    calculateTotal();
+  };
+
+  const handleDecrement = () => {
+    if (!quantityRef.current) return;
+    const quantity = parseInt(quantityRef.current.value) || 1;
+    if (quantity > 1) {
+      quantityRef.current.value = String(quantity - 1);
+      calculateTotal();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -146,27 +163,51 @@ export const Form = () => {
           </fieldset>
           <label htmlFor="quantity">
             Quantity
-            <input
-              title="Quantity"
-              type="number"
-              id="quantity"
-              name="quantity"
-              inputMode="numeric"
-              min={1}
-              required
-              defaultValue={1}
-              onChange={calculateTotal}
-              onKeyDown={(e) => {
-                if (e.key === "0" && e.currentTarget.value === "") {
-                  e.preventDefault();
-                }
-              }}
-              onInput={(e) => {
-                if (Number(e.currentTarget.value) < 1) {
-                  e.currentTarget.value = "";
-                }
-              }}
-            />
+            <div style={{ display: "flex", flex: 1, gap: "1rem" }}>
+              <button
+                type="button"
+                data-action="decrement"
+                onClick={handleDecrement}
+                style={{ width: "4rem" }}
+                className="increment-decrement-button"
+              >
+                −
+              </button>
+              <input
+                title="Quantity"
+                type="number"
+                id="quantity"
+                name="quantity"
+                inputMode="numeric"
+                min={1}
+                readOnly
+                required
+                ref={quantityRef}
+                defaultValue={1}
+                onChange={calculateTotal}
+                onKeyDown={(e) => {
+                  if (e.key === "0" && e.currentTarget.value === "") {
+                    e.preventDefault();
+                  }
+                }}
+                onInput={(e) => {
+                  if (Number(e.currentTarget.value) < 1) {
+                    e.currentTarget.value = "";
+                  }
+                }}
+                style={{ flex: 1 }}
+              />
+
+              <button
+                type="button"
+                data-action="increment"
+                onClick={handleIncrement}
+                style={{ width: "4rem" }}
+                className="increment-decrement-button"
+              >
+                +
+              </button>
+            </div>
           </label>
 
           <div
@@ -186,6 +227,7 @@ export const Form = () => {
 
           <button
             type="submit"
+            className="submit-button"
             disabled={state.status === "processing"}
             style={{ marginTop: "12px" }}
           >
@@ -207,6 +249,7 @@ export const Form = () => {
           <span>We'll take it from here.</span>
           <div id="buttons">
             <button
+              className="submit-button"
               onClick={() => {
                 document.getElementById("the-collection")?.scrollIntoView();
               }}

@@ -204,7 +204,7 @@ input[type="radio"] {
   color-scheme: light;
 }
 
-button {
+.submit-button {
   border-radius: var(--border-radius);
   border: 1px solid transparent;
   padding: 20px 0px;
@@ -221,7 +221,7 @@ button {
   transition: border-color 0.25s;
 }
 
-button:hover {
+.submit-button:hover {
   background: linear-gradient(
     90deg,
     rgba(61, 42, 31, 1) 0%,
@@ -616,6 +616,19 @@ form {
     var(--intensity-bar-fill) 100%
   );
   border-radius: var(--border-radius);
+}
+
+.increment-decrement-button {
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--intensity-bar-bg);
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.increment-decrement-button:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 @keyframes scrolling {
