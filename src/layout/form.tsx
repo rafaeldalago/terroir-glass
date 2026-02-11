@@ -46,6 +46,37 @@ export const Form = () => {
     }
   };
 
+  const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
+    let value = e.currentTarget.value.replace(/\D/g, "");
+    if (value.length > 11) value = value.slice(0, 11);
+
+    let formatted = "";
+    if (value.length > 0) {
+      formatted = "(" + value.substring(0, 2);
+      if (value.length >= 3) {
+        formatted += ") " + value.substring(2, 7);
+      }
+      if (value.length >= 8) {
+        formatted += "-" + value.substring(7, 11);
+      }
+    }
+    e.currentTarget.value = formatted;
+  };
+
+  const handleZipInput = (e: React.FormEvent<HTMLInputElement>) => {
+    let value = e.currentTarget.value.replace(/\D/g, "");
+    if (value.length > 8) value = value.slice(0, 8);
+
+    let formatted = "";
+    if (value.length > 0) {
+      formatted = value.substring(0, 5);
+      if (value.length >= 6) {
+        formatted += "-" + value.substring(5, 8);
+      }
+    }
+    e.currentTarget.value = formatted;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       setState({ status: "processing" });
@@ -54,7 +85,7 @@ export const Form = () => {
       await new Promise((resolve) => setTimeout(() => resolve(""), 1000));
       setState({ status: "success" });
       form.reset();
-      setTotalPrice(25); // Reset to default
+      setTotalPrice(GLASS_PRICES["bordeaux"]);
     } catch (error) {
       setState({
         status: "error",
@@ -96,6 +127,7 @@ export const Form = () => {
               title="E-mail"
               id="email"
               name="email"
+              placeholder="example@email.com"
               required
             />
           </label>
@@ -104,13 +136,13 @@ export const Form = () => {
             Phone number
             <input
               type="tel"
-              inputMode="numeric"
               title="Phone Number"
               id="phone_number"
               name="phone_number"
-              pattern="[0-9]{11}"
-              minLength={11}
-              maxLength={11}
+              placeholder="(XX) XXXXX-XXXX"
+              onInput={handlePhoneInput}
+              pattern="\(\d{2}\) \d{5}-\d{4}"
+              maxLength={15}
               required
             />
           </label>
@@ -120,8 +152,10 @@ export const Form = () => {
               title="Zip Code"
               id="zip_code"
               name="zip_code"
-              minLength={8}
-              maxLength={8}
+              placeholder="XXXXX-XXX"
+              onInput={handleZipInput}
+              pattern="\d{5}-\d{3}"
+              maxLength={9}
               required
             />
           </label>
