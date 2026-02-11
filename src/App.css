@@ -600,8 +600,8 @@ form {
 }
 
 .progress-bar {
-  width: 120px;
-  max-width: 100%;
+  width: 100px;
+  /* max-width: 100px; */
   height: 12px;
   border-radius: var(--border-radius);
   background-color: var(--intensity-bar-bg);

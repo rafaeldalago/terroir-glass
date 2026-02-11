@@ -42,7 +42,7 @@ export const Clients = () => {
               className="restaurant-logo"
               loading="lazy"
             />
-            <p>{client.name}</p>
+            <p style={{ textAlign: "center" }}>{client.name}</p>
           </div>
         ))}
       </div>

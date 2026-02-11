@@ -229,7 +229,7 @@ export const Form = () => {
                     e.currentTarget.value = "";
                   }
                 }}
-                style={{ flex: 1 }}
+                style={{ width: "100%" }}
               />
 
               <button
@@ -251,7 +251,7 @@ export const Form = () => {
               textAlign: "right",
             }}
           >
-            Total: ${totalPrice.toFixed(2)}
+            <span>Total: ${totalPrice.toFixed(2)}</span>
           </div>
 
           <label htmlFor="observation">

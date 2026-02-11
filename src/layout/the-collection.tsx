@@ -91,10 +91,10 @@ export const TheCollection = () => {
                     ))}
                   </tbody>
                 </table>
-                <p className="profile-disclaimer">
+                <span className="profile-disclaimer">
                   Not a specification, but a reference. A way to understand
                   balance, character, and purpose at a glance.
-                </p>
+                </span>
               </div>
               <img src={item.img} className="card-image" alt={item.title} />
             </div>
