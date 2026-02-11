@@ -6,14 +6,17 @@ const clients = [
   {
     id: "KQxxmGxasBxCd3",
     img: restaurant1,
+    name: "Salty Sparrow",
   },
   {
     id: "NaeesdiqQn1mN",
     img: restaurant2,
+    name: "Golden Hour",
   },
   {
     id: "k19weJQOn3xqw",
     img: restaurant3,
+    name: "Mountain Standard",
   },
 ];
 
@@ -25,12 +28,22 @@ export const Clients = () => {
       </h2>
       <div>
         {clients.map((client) => (
-          <img
+          <div
             key={client.id}
-            src={client.img}
-            alt="logo1"
-            className="restaurant-logo"
-          />
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={client.img}
+              alt={client.name}
+              className="restaurant-logo"
+              loading="lazy"
+            />
+            <p>{client.name}</p>
+          </div>
         ))}
       </div>
     </section>

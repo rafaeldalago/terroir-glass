@@ -139,7 +139,6 @@ header {
 }
 
 #upgrade {
-  /* background-color: bisque; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -324,8 +323,8 @@ form {
   position: sticky;
   top: 0;
   flex: 1;
-  margin: 0 -2rem;
-  padding: 0 2rem;
+  margin: 0rem -3rem;
+  padding: 0rem 3rem;
   z-index: 10;
 }
 
@@ -749,6 +748,13 @@ form {
 
   .nav-links {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    margin: 0rem -2rem;
+    padding: 0rem 2rem;
   }
 }
 

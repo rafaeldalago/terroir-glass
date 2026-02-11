@@ -8,6 +8,7 @@ export const AtTheTable = () => {
         src={diningTable}
         alt="Restaurant dining table"
         className="dining-table"
+        loading="lazy"
       />
       <p>
         From fine dining rooms to intimate wine bars, Terroir exists to honor

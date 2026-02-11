@@ -47,6 +47,7 @@ export const Craft = () => {
           src={manufacturing}
           alt="Glass manufacturing"
           className="glass-manufacture"
+          loading="lazy"
         />
       </div>
     </section>
