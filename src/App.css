@@ -129,7 +129,8 @@ header {
 .nav-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: 300;
 }
 
 .nav-links a:hover {
@@ -325,6 +326,7 @@ form {
   flex: 1;
   margin: 0 -2rem;
   padding: 0 2rem;
+  z-index: 10;
 }
 
 .card-text h3 {
@@ -698,6 +700,7 @@ form {
 
   .nav-links a {
     color: var(--primary-color);
+    font-size: 1rem;
   }
 
   .product-card {
@@ -742,6 +745,10 @@ form {
 
   .header-image {
     margin-top: 2rem;
+  }
+
+  .nav-links {
+    font-size: 1rem;
   }
 }
 
@@ -814,6 +821,10 @@ form {
 
   form {
     max-width: 480px;
+  }
+
+  .nav-links {
+    font-size: 1rem;
   }
 }
 
